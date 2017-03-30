@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Stock Hawk</string>
+
+    <string name="pref_stocks_key">stocks</string>
+
+
+    <string name="pref_display_mode_key">displayMode</string>
+    <string name="pref_display_mode_default">@string/pref_display_mode_percentage_key</string>
+
+    <string name="pref_display_mode_absolute_key">absolute</string>
+    <string name="pref_display_mode_percentage_key">percentage</string>
+
+    <string name="default_stocks_yahoo">YHOO</string>
+    <string name="default_stocks_apple">AAPL</string>
+    <string name="default_stocks_microsoft">MSFT</string>
+    <string name="default_stocks_facebook">FB</string>
+
+
+    <string name="action_change_units">@string/pref_display_mode_key</string>
+
+
+    <string name="dialog_title">Πρόσθεσε μετοχή</string>
+    <string name="dialog_hint">Σύμβολο (π.χ. GOOG)</string>
+    <string name="dialog_cancel">Άκυρο</string>
+    <string name="dialog_add">Προσθήκη</string>
+
+    <string name="error_no_network">Δεν υπάρχει σύνδεση δικτύου!! Θα γίνει φόρτωση των μετοχών μόλις το δίκτυο είναι διαθέσιμο.</string>
+    <string name="error_no_stocks">Δεν προστέθηκαν μετοχές! Πάτησε το στρογγυλό ιπτάμενο κουμπί για να προσθέσεις μία μετοχή.</string>
+
+    <string name="toast_stock_added_no_connectivity">Η μετοχή %s προστέθηκε. Θα γίνει ανανέωση όταν υπάρξει διαθέσιμο δίκτυο.</string>
+    <string name="toast_no_connectivity">Θα γίνει ανανέωση όταν υπάρξει διαθέσιμο δίκτυο</string>
+    <string name="floating_action_button">Στρογγυλό ιπτάμενο κουμπί (FAB)</string>
+    <string name="error_message">Μήνυμα λάθους</string>
+    <string name="desciption_text"> μετοχή στα τελευταία 2 χρόνια.</string>
+    <string name="stock_does_not_exist" >Αυτή η μετοχή %s δεν υπάρχει!</string>
+    <string name="awesome_widget">Απίθανο widget</string>
+
+</resources>
