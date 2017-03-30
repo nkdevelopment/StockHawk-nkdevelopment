@@ -21,7 +21,7 @@ import java.util.Locale;
 
 
 /**
- * Created by NKdevelopment on 29/3/2017.
+ * Created by NKdevelopment on 29/3/2017.  test github
  */
 
 public class StockWidgetService extends RemoteViewsService {
