@@ -3,9 +3,11 @@ package com.udacity.stockhawk.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.SyncStateContract;
 import android.widget.RemoteViews;
 
 import com.udacity.stockhawk.R;
@@ -15,12 +17,34 @@ import com.udacity.stockhawk.ui.StockDetailActivity;
 public class StockWidgetProvider extends AppWidgetProvider {
 
     public static final String EXTRA_SYMBOL = "extra:symbol";
+    public static final String ACTION_UPDATE_WIDGETS = "android.appwidget.action.APPWIDGET_UPDATE";
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+
+        if (intent != null) {
+            if (intent.getAction().equals(ACTION_UPDATE_WIDGETS)) {
+                ComponentName thisWidget = new ComponentName(context.getApplicationContext(),
+                        StockWidgetProvider.class);
+                AppWidgetManager appWidgetManager = AppWidgetManager
+                        .getInstance(context.getApplicationContext());
+                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list);
+                if (appWidgetIds != null && appWidgetIds.length > 0) {
+                    onUpdate(context, appWidgetManager, appWidgetIds);
+                }
+            }
+        }
+
+        super.onReceive(context, intent);
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        for(int appWidgetId : appWidgetIds) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-            // Create an Intent to launch MainActivity.class
+        for (int appWidgetId : appWidgetIds) {
+
             Intent intent = new Intent(context, MainActivity.class);
             PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
@@ -42,5 +66,9 @@ public class StockWidgetProvider extends AppWidgetProvider {
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
         }
+
     }
 }
+
+
+
