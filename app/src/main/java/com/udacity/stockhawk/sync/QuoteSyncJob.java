@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.mock.MockUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public final class QuoteSyncJob {
 
     private static final int ONE_OFF_ID = 2;
     private static final String ACTION_DATA_UPDATED = "com.udacity.stockhawk.ACTION_DATA_UPDATED";
-    private static final int PERIOD = 60000;
-    private static final int INITIAL_BACKOFF = 10000;
+    private static final int PERIOD = 15000;
+    private static final int INITIAL_BACKOFF = 5000;
     private static final int PERIODIC_ID = 1;
     private static final int YEARS_OF_HISTORY = 2;
     private static StockQuote quote;
@@ -102,7 +103,13 @@ public final class QuoteSyncJob {
                     float change = quote.getChange().floatValue();
                     float percentChange = quote.getChangeInPercent().floatValue();
 
-                    List<HistoricalQuote> history = stock.getHistory(from, to, Interval.WEEKLY);
+//                    List<HistoricalQuote> history = stock.getHistory(from, to, Interval.WEEKLY);
+                    // Note for reviewer:
+                    // Due to the problems with Yahoo API we have commented the line above
+                    // and included this one to fetch the history from MockUtils
+                    // This should be enough as to develop and review while the API is down
+                    List<HistoricalQuote> history = MockUtils.getHistory();
+
 
                     StringBuilder historyBuilder = new StringBuilder();
 
@@ -124,11 +131,7 @@ public final class QuoteSyncJob {
 
                     quoteCVs.add(quoteCV);
 
-
-
                 }
-
-
 
             }
 
@@ -145,9 +148,9 @@ public final class QuoteSyncJob {
         }
     }
 
+    // this method schedules a periodic task
     private static void schedulePeriodic(Context context) {
         Timber.d("Scheduling a periodic task");
-
 
         JobInfo.Builder builder = new JobInfo.Builder(PERIODIC_ID, new ComponentName(context, QuoteJobService.class));
 
@@ -155,7 +158,6 @@ public final class QuoteSyncJob {
         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPeriodic(PERIOD)
                 .setBackoffCriteria(INITIAL_BACKOFF, JobInfo.BACKOFF_POLICY_EXPONENTIAL);
-
 
         JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
@@ -167,15 +169,17 @@ public final class QuoteSyncJob {
 
         schedulePeriodic(context);
         syncImmediately(context);
-
     }
 
+    // this method starts Service immediately (IntentService
     public static synchronized void syncImmediately(Context context) {
 
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+            // IntentService
             Intent nowIntent = new Intent(context, QuoteIntentService.class);
+            // start service... context.startService()
             context.startService(nowIntent);
         } else {
 
@@ -189,10 +193,7 @@ public final class QuoteSyncJob {
             JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
             scheduler.schedule(builder.build());
-
-
         }
     }
-
 
 }

@@ -92,6 +92,8 @@ public class StockWidgetService extends RemoteViewsService {
         }
 
 
+        // this method is called from AppWidgetProvider/onReceive()
+        // when is called from AppWidgetManager .notifyAppWidgetViewDataChanged()..
         @Override
         public void onDataSetChanged() {
             Thread thread = new Thread() {

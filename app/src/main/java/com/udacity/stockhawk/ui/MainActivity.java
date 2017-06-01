@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         swipeRefreshLayout.setRefreshing(true);
         onRefresh();
 
+
         QuoteSyncJob.initialize(this);
 
         getSupportLoaderManager().initLoader(STOCK_LOADER, null, this);     // args:null, callback:this
@@ -134,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             PrefUtils.addStock(this, symbol);
             QuoteSyncJob.syncImmediately(this);
+
+
         }
     }
 
@@ -156,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         adapter.setCursor(data);
     }
-
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {

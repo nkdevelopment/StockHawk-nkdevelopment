@@ -20,6 +20,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+// this is an Adapter for a RecyclerView
 class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
     private final Context context;
@@ -53,6 +54,8 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         return cursor.getString(Contract.Quote.POSITION_SYMBOL);
     }
 
+    // this method creates a new view holder when there are no existing view holder which RecyclerView can reuse.
+    // Called when RecyclerView needs a new RecyclerView.ViewHolder of the given type to represent an item.
     @Override
     public StockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -61,6 +64,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         return new StockViewHolder(item);
     }
 
+    // this method is called to display the data at the specified position
     @Override
     public void onBindViewHolder(StockViewHolder holder, int position) {
 
@@ -92,6 +96,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
     }
 
+    // returns the total number of items in the data set held by the adapter
     @Override
     public int getItemCount() {
         int count = 0;
@@ -106,6 +111,8 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         void onClick(String symbol);
     }
 
+    //A ViewHolder describes an item view and metadata about its place within the RecyclerView.
+    // A ViewHolder is an object attached to each row
     class StockViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.symbol)
@@ -117,6 +124,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         @BindView(R.id.change)
         TextView change;
 
+        // construction that takes the view and sets OnClickListener on it
         StockViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -129,9 +137,6 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
             cursor.moveToPosition(adapterPosition);
             int symbolColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_SYMBOL);
             clickHandler.onClick(cursor.getString(symbolColumn));
-
         }
-
-
     }
 }

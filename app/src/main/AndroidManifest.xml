@@ -39,6 +39,7 @@
 
         <activity android:name=".ui.StockDetailActivity" />
 
+        <!--Boradcast receiver for my widget-->
         <receiver
             android:name=".widget.StockWidgetProvider"
             android:enabled="true"
@@ -53,6 +54,7 @@
                 android:resource="@xml/appwidget_provider" />
         </receiver>
 
+        <!--RemoteViewService-->
         <service android:name=".widget.StockWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 

@@ -4,6 +4,6 @@
     android:minHeight="40dp"
     android:minWidth="320dp"
     android:resizeMode="vertical"
-    android:updatePeriodMillis="300000">
+    android:updatePeriodMillis="300000"> <!-- 30 mins minimum -->
 
 </appwidget-provider>
